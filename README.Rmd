@@ -11,6 +11,9 @@ knitr::opts_chunk$set(
   fig.path = "man/figures/README-",
   out.width = "100%"
 )
+Sys.setlocale(category = 'LC_ALL', locale = 'English_United States.1252')
+library(purrr)
+library(dplyr)
 ```
 
 # fivbvis
@@ -38,11 +41,8 @@ By default, results are cached in a per-session cache, so if we make the same re
 ### 1. Get Tournaments List with Filter Seasons
 
 ```{r example1}
-library(purrr)
-library(dplyr)
 library(fivbvis)
 
-Sys.setlocale(category = 'LC_ALL', locale = 'English_United States.1252')
 v_options(verbose = TRUE)
 
 cl <- list(Filter = c(Seasons = "2021"))

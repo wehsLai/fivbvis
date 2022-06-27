@@ -29,29 +29,14 @@ re-downloading:
 ### 1. Get Tournaments List with Filter Seasons
 
 ``` r
-library(purrr)
-library(dplyr)
-#> 
-#> è¼‰å…¥å¥—ä»¶ï¼š'dplyr'
-#> ä¸‹åˆ—ç‰©ä»¶è¢«é®æ–·è‡ª 'package:stats':
-#> 
-#>     filter, lag
-#> ä¸‹åˆ—ç‰©ä»¶è¢«é®æ–·è‡ª 'package:base':
-#> 
-#>     intersect, setdiff, setequal, union
 library(fivbvis)
 
-Sys.setlocale(category = 'LC_ALL', locale = 'English_United States.1252')
-#> Warning in Sys.setlocale(category = "LC_ALL", locale = "English_United
-#> States.1252"): using locale code page other than 65001 ("UTF-8") may cause
-#> problems
-#> [1] "LC_COLLATE=English_United States.1252;LC_CTYPE=English_United States.1252;LC_MONETARY=English_United States.1252;LC_NUMERIC=C;LC_TIME=English_United States.1252"
 v_options(verbose = TRUE)
 
 cl <- list(Filter = c(Seasons = "2021"))
 vb_tournaments <- v_get_volley_tournament_list(children = cl)[c("no", "shortNameOrName", "season", "defaultPlayersRanking")]
 #> making  request
-#> caching to C:\Users\user\AppData\Local\Temp\RtmpAvViAk\file5c0c1d07eb7/938b7b83fa168d850027781ac9ad0c62.rds
+#> caching to C:\Users\user\AppData\Local\Temp\RtmpgbrvLn\file2a105a465604/938b7b83fa168d850027781ac9ad0c62.rds
 vb_tournaments
 #> # A tibble: 46 x 4
 #>       no shortNameOrName                                 season defaultPlayersR~
@@ -77,7 +62,7 @@ cl <- list(Filter = c(NoTournament = s_tournament$no),
            Relation = c(Name="Pool", Fields="Name RoundName"))
 v_get_volley_match_list(children = cl)[c("dateTimeLocal", "pool.name", "teamAName", "teamBName", "matchResultText")]
 #> making  request
-#> caching to C:\Users\user\AppData\Local\Temp\RtmpAvViAk\file5c0c1d07eb7/88b6fedaaa4e5eeaa98102c7d1b8c71d.rds
+#> caching to C:\Users\user\AppData\Local\Temp\RtmpgbrvLn\file2a105a465604/88b6fedaaa4e5eeaa98102c7d1b8c71d.rds
 #> # A tibble: 124 x 5
 #>    dateTimeLocal       pool.name teamAName   teamBName matchResultText
 #>    <dttm>              <chr>     <chr>       <chr>     <chr>          
@@ -101,7 +86,7 @@ pl <- list(Fields = paste0(v_fields("Volleyball Pool"), collapse = " "))
 cl <- list(Filter = c(NoTournament = s_tournament$no), ForRanking = NULL)
 v_get_volley_pool_list(parent=pl, children = cl)[c("name", "roundName")]
 #> making  request
-#> caching to C:\Users\user\AppData\Local\Temp\RtmpAvViAk\file5c0c1d07eb7/8beed89bcbe6d83f7f1705c47b699a25.rds
+#> caching to C:\Users\user\AppData\Local\Temp\RtmpgbrvLn\file2a105a465604/8beed89bcbe6d83f7f1705c47b699a25.rds
 #> # A tibble: 9 x 2
 #>   name              roundName        
 #>   <chr>             <chr>            
@@ -122,7 +107,7 @@ v_get_volley_pool_list(parent=pl, children = cl)[c("name", "roundName")]
 cl <- list(Filter = c(NoTournament = s_tournament$no))
 v_get_volley_team_list(children = cl)[c("code", "name")]
 #> making  request
-#> caching to C:\Users\user\AppData\Local\Temp\RtmpAvViAk\file5c0c1d07eb7/5377dc95bce122b9adecd8236e406e21.rds
+#> caching to C:\Users\user\AppData\Local\Temp\RtmpgbrvLn\file2a105a465604/5377dc95bce122b9adecd8236e406e21.rds
 #> # A tibble: 16 x 2
 #>    code  name       
 #>    <chr> <chr>      
@@ -150,7 +135,7 @@ v_get_volley_team_list(children = cl)[c("code", "name")]
 cl <- list(Filter = c(NoTournament = s_tournament$no), Relation = c(Name="Player", Fields="TeamName FirstName LastName"), Relation = c(Name="Team", Fields="code"))
 v_get_volley_player_list(children = cl)[c("team", "noShirt", "position","player.firstName", "player.lastName")]
 #> making  request
-#> caching to C:\Users\user\AppData\Local\Temp\RtmpAvViAk\file5c0c1d07eb7/abfa2426fa91efaa620f3ca2d7db88b5.rds
+#> caching to C:\Users\user\AppData\Local\Temp\RtmpgbrvLn\file2a105a465604/abfa2426fa91efaa620f3ca2d7db88b5.rds
 #> # A tibble: 271 x 5
 #>    team  noShirt position       player.firstName player.lastName
 #>    <chr>   <int> <chr>          <chr>            <chr>          
@@ -179,7 +164,7 @@ cl <- list(Filter = c(NoTournaments = s_tournament$no, MatchesToUse="MatchesStar
            )
 v_get_volley_statistic_list(parent = pl, children = cl)[c("player.teamName","blockPoint", "blockFault", "blockContinue","blockTotal")]
 #> making  request
-#> caching to C:\Users\user\AppData\Local\Temp\RtmpAvViAk\file5c0c1d07eb7/19fb2d577498749e6e618e58e6f06206.rds
+#> caching to C:\Users\user\AppData\Local\Temp\RtmpgbrvLn\file2a105a465604/19fb2d577498749e6e618e58e6f06206.rds
 #> # A tibble: 279 x 5
 #>    player.teamName blockPoint blockFault blockContinue blockTotal
 #>    <chr>                <int>      <int>         <int>      <int>
@@ -203,11 +188,11 @@ pl <- list(Fields = paste0(v_fields("Volleyball Pool"), collapse = " "))
 cl <- list(Filter = c(NoTournament = s_tournament$no, ForRanking=TRUE))
 vb_pools_frk <- v_get_volley_pool_list(parent=pl, children = cl)
 #> making  request
-#> caching to C:\Users\user\AppData\Local\Temp\RtmpAvViAk\file5c0c1d07eb7/e9eb82762fac89d3dd224a763aed276d.rds
+#> caching to C:\Users\user\AppData\Local\Temp\RtmpgbrvLn\file2a105a465604/e9eb82762fac89d3dd224a763aed276d.rds
 pl <- list(NoPool = vb_pools_frk$no[1], Fields = paste(v_fields("Volleyball Pool Ranking"), collapse = " "))
 v_get_volley_pool_ranking(parent = pl)[c("rankTextWithRepeat", "teamCode", "matchPoints", "matchesWon", "matchesLost", "matches", "setsRatioText", "pointsRatioText")]
 #> making  request
-#> caching to C:\Users\user\AppData\Local\Temp\RtmpAvViAk\file5c0c1d07eb7/76682a590f64a9423a672067f3dbf6a1.rds
+#> caching to C:\Users\user\AppData\Local\Temp\RtmpgbrvLn\file2a105a465604/76682a590f64a9423a672067f3dbf6a1.rds
 #> # A tibble: 16 x 8
 #>    rankTextWithRepeat teamCode matchPoints matchesWon matchesLost matches
 #>                 <int> <chr>          <int>      <int>       <int>   <int>
@@ -236,7 +221,7 @@ v_get_volley_pool_ranking(parent = pl)[c("rankTextWithRepeat", "teamCode", "matc
 pl <- list(NoTournament = s_tournament$no, Fields = paste(v_fields("Volleyball Tournament Ranking"), collapse = " "))
 v_get_volley_tournament_ranking(parent = pl)[c("rankTextWithRepeat", "teamName")]
 #> making  request
-#> caching to C:\Users\user\AppData\Local\Temp\RtmpAvViAk\file5c0c1d07eb7/5acc0dd3500882bca3779acd2dd4c869.rds
+#> caching to C:\Users\user\AppData\Local\Temp\RtmpgbrvLn\file2a105a465604/5acc0dd3500882bca3779acd2dd4c869.rds
 #> # A tibble: 16 x 2
 #>    rankTextWithRepeat teamName   
 #>                 <int> <chr>      
@@ -267,7 +252,7 @@ if(!is.na(s_tournament$defaultPlayersRanking)) {
     vb_players_ranking$Spike[c("TeamCode", "FirstName", "LastName", "Successes", "Faults", "Continues", "TotalAttempts", "Note")]
 }
 #> making  request
-#> caching to C:\Users\user\AppData\Local\Temp\RtmpAvViAk\file5c0c1d07eb7/8d8e82067709454d3ef520097f6295df.rds
+#> caching to C:\Users\user\AppData\Local\Temp\RtmpgbrvLn\file2a105a465604/8d8e82067709454d3ef520097f6295df.rds
 #> # A tibble: 10 x 8
 #>    TeamCode FirstName    LastName Successes Faults Continues TotalAttempts Note 
 #>    <chr>    <chr>        <chr>    <chr>     <chr>  <chr>     <chr>         <chr>

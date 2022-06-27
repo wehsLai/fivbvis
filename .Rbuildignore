@@ -4,3 +4,6 @@
 ^README\.html$
 ^.*\.Rproj$
 docs/
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
