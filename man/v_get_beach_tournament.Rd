@@ -19,7 +19,7 @@ Get a beach tournament
 }
 \examples{
 \dontrun{
-  v_get_beach_tournament(502)
+v_get_beach_tournament(502)
 }
 
 }

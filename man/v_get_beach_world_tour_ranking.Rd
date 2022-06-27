@@ -28,7 +28,7 @@ Request to get a beach volleyball World Tour ranking
 }
 \examples{
 \dontrun{
-  v_get_beach_world_tour_ranking("W")
+v_get_beach_world_tour_ranking("W")
 }
 
 }

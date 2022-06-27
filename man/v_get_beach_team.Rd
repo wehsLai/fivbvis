@@ -19,7 +19,7 @@ Get a beach volleyball team
 }
 \examples{
 \dontrun{
-  v_get_beach_team(375442)
+v_get_beach_team(375442)
 }
 
 }

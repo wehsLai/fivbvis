@@ -1,29 +1,33 @@
 Package: fivbvis
-Title: Client for the FIVB VIS Web Service \url{https://www.fivb.org/VisSDK/VisWebService/}
-Version: 0.0.6
+Title: Get data from FIVB VIS web server
+Version: 0.1.0
 Authors@R: c(person("Ben", "Raymond", email = "ben@untan.gl", role = c("aut", "cre")),
              person("Adrien", "Ickowicz", role = "aut"),
              person("Tyler", "Widdison", role = "aut"),
+             person("Wen Hsiu", "Lai", role = "aut"),
              person("openvolley.org", role = "org"))
-Description: Client for the FIVB VIS web service.
+Description: A R package for getting data from FIVB VIS web server.
 Imports:
     assertthat,
     data.table,
     digest,
+    dplyr,
     httr,
     jsonlite,
     methods,
     minixml,
+    purrr,
     rappdirs,
     rvest,
     tibble,
     xml2,
     XML
 Suggests:
-    testthat
+    testthat (>= 3.0.0)
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.1.1
+RoxygenNote: 7.2.0
 Roxygen: list(markdown = TRUE)
 Remotes: coolbutuseless/minixml
+Config/testthat/edition: 3

@@ -28,7 +28,7 @@ Get a list of press releases
 }
 \examples{
 \dontrun{
-  v_get_press_release_list(10)
+v_get_press_release_list(10)
 }
 
 }

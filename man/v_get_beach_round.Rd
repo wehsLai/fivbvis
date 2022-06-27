@@ -19,7 +19,7 @@ Get a beach volleyball round
 }
 \examples{
 \dontrun{
-  v_get_beach_round(3054)
+v_get_beach_round(3054)
 }
 
 }

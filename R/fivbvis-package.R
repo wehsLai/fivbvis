@@ -1,6 +1,6 @@
 #' \pkg{fivbvis}
 #'
-#' Client for the FIVB VIS web service
+#' R package for getting data from FIVB VIS web server
 #'
 #' @name fivbvis
 #' @docType package

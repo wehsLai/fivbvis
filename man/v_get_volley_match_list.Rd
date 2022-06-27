@@ -4,14 +4,15 @@
 \alias{v_get_volley_match_list}
 \title{Get a list of volleyball matches}
 \usage{
-v_get_volley_match_list(fields = v_fields("Volleyball Match"), version, filter)
+v_get_volley_match_list(
+  parent = list(Fields = paste0(v_fields("Volleyball Match"), collapse = " ")),
+  children
+)
 }
 \arguments{
-\item{fields}{character: fields to return}
+\item{parent}{list: List of named charactor vectors. Specify attributes of Request Node.}
 
-\item{version}{integer: version of local list (currently ignored)}
-
-\item{filter}{list: (currently ignored)}
+\item{children}{list: Named list of named charactor vectors. Add child nodes such as Filter, Relation.}
 }
 \value{
 A data.frame
@@ -21,7 +22,8 @@ Get a list of volleyball matches
 }
 \examples{
 \dontrun{
-  v_get_volley_match_list()
+cl <- list(Filter = c(NoTournament = 1257))
+v_get_volley_match_list(children = cl)
 }
 
 }

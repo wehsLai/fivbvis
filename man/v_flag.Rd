@@ -17,7 +17,7 @@ Retrieve a country flag image
 }
 \examples{
 \dontrun{
-  v_flag("AU")
+v_flag("AU")
 }
 
 }

@@ -21,7 +21,7 @@ Get a list of beach volleyball rounds
 }
 \examples{
 \dontrun{
-  v_get_beach_round_list()
+v_get_beach_round_list()
 }
 
 }

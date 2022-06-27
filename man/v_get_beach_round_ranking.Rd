@@ -19,7 +19,7 @@ Request to get the ranking of a beach volleyball round
 }
 \examples{
 \dontrun{
-  v_get_beach_round_ranking(980)
+v_get_beach_round_ranking(980)
 }
 
 }

@@ -31,7 +31,7 @@ Request to get a beach volleyball Olympic Selection ranking
 }
 \examples{
 \dontrun{
-  v_get_beach_olympic_selection_ranking("W")
+v_get_beach_olympic_selection_ranking("W")
 }
 
 }

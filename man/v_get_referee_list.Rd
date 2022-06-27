@@ -21,7 +21,7 @@ Get a list of referees
 }
 \examples{
 \dontrun{
-  v_get_referee_list()
+v_get_referee_list()
 }
 
 }

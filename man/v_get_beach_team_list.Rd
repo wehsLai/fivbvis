@@ -21,7 +21,7 @@ Get a list of beach volleyball teams
 }
 \examples{
 \dontrun{
-  v_get_beach_team_list()
+v_get_beach_team_list()
 }
 
 }

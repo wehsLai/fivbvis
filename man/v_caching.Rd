@@ -33,9 +33,9 @@ v_caching("refresh") ## contents in cache will be updated
 
 v_cache_dir() ## return current cache dir
 \dontrun{
-  v_cache_dir("session") ## use per-session cache
-  v_cache_dir("user") ## use persistent, user-specific cache
-  v_cache_dir("c:/my/cache/dir") ## use specific dir
+v_cache_dir("session") ## use per-session cache
+v_cache_dir("user") ## use persistent, user-specific cache
+v_cache_dir("c:/my/cache/dir") ## use specific dir
 }
 
 }

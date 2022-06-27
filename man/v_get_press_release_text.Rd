@@ -21,7 +21,7 @@ Get a press release text
 }
 \examples{
 \dontrun{
-  v_get_press_release_text(28639)
+v_get_press_release_text(28639)
 }
 
 }
