@@ -271,6 +271,17 @@ v_schema <- function(type) {
       5L, "Universal", "Universal",
       6L, "OppositeSpiker", "Opposite spiker"
     ),
+    ## Short version
+    "Player Volley Pos" = tribble(
+      ~from, ~to, ~description,
+      0L, "_", "Unknown",
+      1L, "S", "Setter",
+      2L, "OH", "Wing spiker",
+      3L, "MB", "Middle blocker",
+      4L, "L", "Libero",
+      5L, "U", "Universal",
+      6L, "OP", "Opposite spiker"
+    ),
     ## https://www.fivb.org/VisSDK/VisWebService/PlayerBeachPosition.html
     "Player Beach Position" = tribble(
       ~from, ~to, ~description,

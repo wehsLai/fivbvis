@@ -33,7 +33,7 @@ v_get_volley_tournament_list <- function(parent = list(Fields = paste0(v_fields(
 #'
 #' @examples
 #' \dontrun{
-#' pl <- list(No = 1257, Fields = paste0(v_fields("Volleyball Tournament"), collapse = " "))
+#' pl <- list(No = 1257)
 #' v_get_volley_tournament(parent = pl)
 #' }
 #'
@@ -56,8 +56,10 @@ v_get_volley_tournament <- function(parent, children) {
 #'
 #' @examples
 #' \dontrun{
-#' pl <- list(NoTournament = "1182",
-#'            Fields = paste(v_fields("Volleyball Tournament Ranking"), collapse = " "))
+#' pl <- list(
+#'   NoTournament = "1182",
+#'   Fields = paste(v_fields("Volleyball Tournament Ranking"), collapse = " ")
+#' )
 #' vb_tournament_ranking <- v_get_volley_tournament_ranking(parent = pl)
 #' }
 #'

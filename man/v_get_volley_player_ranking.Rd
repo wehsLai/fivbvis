@@ -17,8 +17,8 @@ Get the ranking of the players in a volleyball tournament
 }
 \examples{
 \dontrun{
-pl <- list(No = 89538, Fields = paste0(v_fields("Volleyball Player"), collapse = " "))
-v_get_volley_player(parent = pl, children = cl)
+pl <- list(No = 229, NumberOfScorers = 20, NumberOfPlayers = 20, Skills = "Block Dig Libero Reception Scorer Service Set Spike")
+vb_player_ranking <- v_get_volley_player_ranking(parent = pl)
 }
 
 }

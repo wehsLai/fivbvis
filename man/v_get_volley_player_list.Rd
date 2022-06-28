@@ -22,8 +22,10 @@ Get a list of registration of players in volleyball tournaments
 }
 \examples{
 \dontrun{
-cl <- list(Filter = c(NoTournament = 1257),
-           Relation = c(Name = "Player", Fields = "No TeamName FirstName LastName"))
+cl <- list(
+  Filter = c(NoTournament = 1257),
+  Relation = c(Name = "Player", Fields = "No TeamName FirstName LastName")
+)
 v_get_volley_player_list(children = cl)
 }
 

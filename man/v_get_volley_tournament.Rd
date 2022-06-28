@@ -19,7 +19,7 @@ Get a volleyball tournament
 }
 \examples{
 \dontrun{
-pl <- list(No = 1257, Fields = paste0(v_fields("Volleyball Tournament"), collapse = " "))
+pl <- list(No = 1257)
 v_get_volley_tournament(parent = pl)
 }
 

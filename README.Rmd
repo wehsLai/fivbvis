@@ -11,14 +11,12 @@ knitr::opts_chunk$set(
   fig.path = "man/figures/README-",
   out.width = "100%"
 )
-Sys.setlocale(category = 'LC_ALL', locale = 'English_United States.1252')
-library(purrr)
-library(dplyr)
 ```
 
 # fivbvis
 
 <!-- badges: start -->
+[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 <!-- badges: end -->
 
 R package for getting data from [FIVB VIS web server](https://www.fivb.org/VisSDK/VisWebService/#Introduction.html)
@@ -38,101 +36,91 @@ This is a basic example which shows you how to get data:
 
 By default, results are cached in a per-session cache, so if we make the same request again the local results are used, rather than re-downloading:
 
-### 1. Get Tournaments List with Filter Seasons
+### 1. Tournaments List with Filter
 
 ```{r example1}
-library(fivbvis)
+library(fivbvis) # load package
 
-v_options(verbose = TRUE)
-
+pl <- list(Fields = "No ShortNameOrName Season DefaultPlayersRanking")
 cl <- list(Filter = c(Seasons = "2021"))
-vb_tournaments <- v_get_volley_tournament_list(children = cl)[c("no", "shortNameOrName", "season", "defaultPlayersRanking")]
+vb_tournaments <- v_get_volley_tournament_list(parent = pl, children = cl)
 vb_tournaments
 ```
 
-### 2. Get Matches List with Filter NoTournament
+### 2. Matches List with Filter
 
 ```{r example2}
-s_tournament <- vb_tournaments %>% filter(shortNameOrName == "FIVB VNL MEN")
-cl <- list(Filter = c(NoTournament = s_tournament$no),
-           Relation = c(Name="Pool", Fields="Name RoundName"))
-v_get_volley_match_list(children = cl)[c("dateTimeLocal", "pool.name", "teamAName", "teamBName", "matchResultText")]
+s_tournament <- vb_tournaments[vb_tournaments$shortNameOrName == "FIVB VNL MEN", ]
+pl <- list(Fields = "DateTimeLocal PoolName, TeamAName TeamBName MatchResultText")
+cl <- list(Filter = c(NoTournament = s_tournament$no))
+v_get_volley_match_list(parent = pl, children = cl)
 ```
 
-### 3. Pools List with Filter NoTournament
+### 3. Pools List with Filter
 
 ```{r example3}
-pl <- list(Fields = paste0(v_fields("Volleyball Pool"), collapse = " "))
-cl <- list(Filter = c(NoTournament = s_tournament$no), ForRanking = NULL)
-v_get_volley_pool_list(parent=pl, children = cl)[c("name", "roundName")]
+pl <- list(Fields = "Name RoundName")
+cl <- list(Filter = c(NoTournament = s_tournament$no, ForRanking = NULL))
+v_get_volley_pool_list(parent=pl, children = cl)
 ```
 
-### 4. Teams List with Filter NoTournament
+### 4. Teams List with Filter
 
 ```{r example4}
+pl <- list(Fields = "Code Name")
 cl <- list(Filter = c(NoTournament = s_tournament$no))
-v_get_volley_team_list(children = cl)[c("code", "name")]
+v_get_volley_team_list(parent = pl, children = cl)
 ```
 
-### 5. Players List with Filter NoTournament, Relation Player
+### 5. Players List with Filter
 
 ```{r example5}
-cl <- list(Filter = c(NoTournament = s_tournament$no), Relation = c(Name="Player", Fields="TeamName FirstName LastName"), Relation = c(Name="Team", Fields="code"))
-v_get_volley_player_list(children = cl)[c("team", "noShirt", "position","player.firstName", "player.lastName")]
+pl <- list(Fields = "Team NoShirt FirstNamePlayer LastNamePlayer Position")
+cl <- list(Filter = c(NoTournament = s_tournament$no))
+v_get_volley_player_list(parent = pl, children = cl)
 ```
 
-### 6. Statistics List with Filter NoTournament
+### 6. Statistics List with Filter, Relation
 
 ```{r example6}
-pl <- list(Fields = paste(v_fields("Volleyball Statistic"), collapse = " "),
-           Include = "Teams", SumBy="Tournament")
-cl <- list(Filter = c(NoTournaments = s_tournament$no, MatchesToUse="MatchesStarted"),
+pl <- list(Fields = "BlockPoint BlockFault BlockContinue BlockTotal",
+           SumBy = "Tournament")
+cl <- list(Filter = c(NoTournaments = s_tournament$no, MatchesToUse="MatchesFinished"),
            Relation = c(Name="Match", Fields="NoInTournament DateLocal TeamACode TeamBCode MatchResult"),
-           Relation = c(Name="Team", Fields="Code"),
-           Relation = c(Name="Player", Fields="TeamName FirstName LastName VolleyPosition")
-           )
-v_get_volley_statistic_list(parent = pl, children = cl)[c("player.teamName","blockPoint", "blockFault", "blockContinue","blockTotal")]
+           Relation = c(Name="Team", Fields="Code Name"),
+           Relation = c(Name="Player", Fields="TeamName FirstName LastName VolleyPosition"))
+v_get_volley_statistic_list(parent = pl, children = cl)
 ```
 
 ### 7. Pool Ranking
 
 ```{r example7}
-pl <- list(Fields = paste0(v_fields("Volleyball Pool"), collapse = " "))
+pl <- list(Fields = "No")
 cl <- list(Filter = c(NoTournament = s_tournament$no, ForRanking=TRUE))
 vb_pools_frk <- v_get_volley_pool_list(parent=pl, children = cl)
-pl <- list(NoPool = vb_pools_frk$no[1], Fields = paste(v_fields("Volleyball Pool Ranking"), collapse = " "))
-v_get_volley_pool_ranking(parent = pl)[c("rankTextWithRepeat", "teamCode", "matchPoints", "matchesWon", "matchesLost", "matches", "setsRatioText", "pointsRatioText")]
+if(length(vb_pools_frk) > 0) {
+  pl <- list(NoPool = vb_pools_frk$no[1], 
+             Fields = "RankTextWithRepeat TeamCode MatchPoints MatchesWon MatchesLost Matches")
+  v_get_volley_pool_ranking(parent = pl)
+}
 ```
 
 ### 8. Tournament Ranking
 
 ```{r example8}
-pl <- list(NoTournament = s_tournament$no, Fields = paste(v_fields("Volleyball Tournament Ranking"), collapse = " "))
-v_get_volley_tournament_ranking(parent = pl)[c("rankTextWithRepeat", "teamName")]
+pl <- list(NoTournament = s_tournament$no, 
+           Fields = "RankTextWithRepeat TeamName")
+v_get_volley_tournament_ranking(parent = pl)
 ```
 
-### 9. Player Ranking
+### 9. Player Spike Ranking
 
 ```{r example9}
 if(!is.na(s_tournament$defaultPlayersRanking)) {
-    pl <- list(No=s_tournament$defaultPlayersRanking, NumberOfScorers=10, NumberOfPlayers=10, Skills = "Scorer Spike Block Service Dig Set Reception Libero")
-    vb_players_ranking <- v_get_volley_player_ranking(parent=pl)
-    vb_players_ranking$Spike[c("TeamCode", "FirstName", "LastName", "Successes", "Faults", "Continues", "TotalAttempts", "Note")]
+  pl <- list(No = s_tournament$defaultPlayersRanking, 
+             NumberOfScorers = 10, NumberOfPlayers = 10, Skills = "Spike")
+  vb_players_ranking <- v_get_volley_player_ranking(parent = pl)
+  vb_players_ranking$Spike[c("TeamCode", "FirstName", "LastName", "Successes", "Faults", "Continues", "TotalAttempts", "Note")]
 }
 ```
 
-<!-- What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:
-
-```{r cars}
-summary(cars)
-```
-
-You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date. `devtools::build_readme()` is handy for this. You could also use GitHub Actions to re-render `README.Rmd` every time you push. An example workflow can be found here: <https://github.com/r-lib/actions/tree/v1/examples>.
-
-You can also embed plots, for example:
-
-```{r pressure, echo = FALSE}
-plot(pressure)
-```
-
-In that case, don't forget to commit and push the resulting figure files, so they display on GitHub and CRAN. -->

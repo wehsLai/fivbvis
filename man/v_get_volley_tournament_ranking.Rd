@@ -17,8 +17,10 @@ Get the ranking of a volleyball tournament
 }
 \examples{
 \dontrun{
-pl <- list(NoTournament = "1182",
-           Fields = paste(v_fields("Volleyball Tournament Ranking"), collapse = " "))
+pl <- list(
+  NoTournament = "1182",
+  Fields = paste(v_fields("Volleyball Tournament Ranking"), collapse = " ")
+)
 vb_tournament_ranking <- v_get_volley_tournament_ranking(parent = pl)
 }
 

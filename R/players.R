@@ -8,8 +8,10 @@
 #'
 #' @examples
 #' \dontrun{
-#' cl <- list(Filter = c(NoTournament = 1257),
-#'            Relation = c(Name = "Player", Fields = "No TeamName FirstName LastName"))
+#' cl <- list(
+#'   Filter = c(NoTournament = 1257),
+#'   Relation = c(Name = "Player", Fields = "No TeamName FirstName LastName")
+#' )
 #' v_get_volley_player_list(children = cl)
 #' }
 #'
@@ -22,7 +24,7 @@ v_get_volley_player_list <- function(parent = list(Fields = paste0(v_fields("Vol
   # </Request>
   req <- v_request2(type = "GetVolleyPlayerList", parent, children)
   out <- make_request(req, type = "json")
-  v_remap(out, col = "position", schema = "Player Volley Position")
+  v_remap(out, col = "position", schema = "Player Volley Pos")
 }
 
 #' Get a registration of a player in a volleyball tournament
@@ -48,7 +50,7 @@ v_get_volley_player <- function(parent, children) {
   # mandatory: "No"
   req <- v_request2(type = "GetVolleyPlayer", parent, children)
   out <- make_request(req, type = "json")
-  v_remap(out, col = "position", schema = "Player Volley Position")
+  v_remap(out, col = "position", schema = "Player Volley Pos")
 }
 
 #' Get the ranking of the players in a volleyball tournament
@@ -60,8 +62,8 @@ v_get_volley_player <- function(parent, children) {
 #'
 #' @examples
 #' \dontrun{
-#' pl <- list(No = 89538, Fields = paste0(v_fields("Volleyball Player"), collapse = " "))
-#' v_get_volley_player(parent = pl, children = cl)
+#' pl <- list(No = 229, NumberOfScorers = 20, NumberOfPlayers = 20, Skills = "Block Dig Libero Reception Scorer Service Set Spike")
+#' vb_player_ranking <- v_get_volley_player_ranking(parent = pl)
 #' }
 #'
 #' @export
@@ -80,7 +82,7 @@ v_get_volley_player_ranking <- function(parent) {
   out <- purrr::set_names(out, purrr::map_chr(out, ~ .x[[".attrs"]][1]))
   out <- purrr::map(out, function(z) {
     out <- dplyr::bind_rows(z[c(names(z) == "Player")])
-    v_remap(out, col = "CourtPosition", schema = "Player Volley Position")
+    v_remap(out, col = "CourtPosition", schema = "Player Volley Pos")
   })
 }
 
