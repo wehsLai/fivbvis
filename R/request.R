@@ -2,6 +2,14 @@ base_url <- "https://www.fivb.org/Vis2009/XmlRequest.asmx"
 
 first_to_upper <- function(z) paste0(toupper(substr(z, 1, 1)), substr(z, 2, nchar(z)))
 
+null_to_na_recurse <- function(obj) {
+    if (is.list(obj)) {
+        obj <- jsonlite:::null_to_na(obj)
+        obj <- lapply(obj, null_to_na_recurse)
+    }
+    return(obj)
+}
+
 ## internal helper function to build the XML request structure
 ## any extra arguments passed to this function (i.e. anything other than type, fields, version, filter, or old_style)
 ##  are added to the xml request as attributes (e.g. "No", "NoTournament" for some requests)
@@ -137,7 +145,7 @@ do_make_request <- function(request, type = "xml", return_type, node_path) {
     }
     out
   } else if (response_type == "application/json") {
-    out <- jsonlite::fromJSON(out)[["data"]] # %>% map(~replace(.x, .x=="NULL",NA))
+    out <- null_to_na_recurse(jsonlite::fromJSON(out, flatten = TRUE))[["data"]] # %>% map(~replace(.x, .x=="NULL",NA))
   } else {
     stop("unexpected response type: ", response_type)
   }

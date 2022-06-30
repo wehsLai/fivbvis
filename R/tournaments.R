@@ -20,7 +20,10 @@ v_get_volley_tournament_list <- function(parent = list(Fields = paste0(v_fields(
   #     <Filter /> <!-- optional: contains the filter to use -->
   # </Request>
   req <- v_request2(type = "GetVolleyTournamentList", parent, children)
-  make_request(req, type = "json")
+  out <- make_request(req, type = "json")
+  out <- v_remap(out, col = "gender", schema = "Event Gender")
+  out <- v_remap(out, col = "organizerType", schema = "Organizer Type")
+  v_remap(out, col = "status", schema = "Volley Tournament Status")
 }
 
 #' Get a volleyball tournament
@@ -44,7 +47,10 @@ v_get_volley_tournament <- function(parent, children) {
   #          Fields="<Optional: list of the fields to return>" />
   # mandatory: "No"
   req <- v_request2(type = "GetVolleyTournament", parent, children)
-  make_request(req, type = "json")
+  out <- make_request(req, type = "json")
+  out <- v_remap(out, col = "gender", schema = "Event Gender")
+  out <- v_remap(out, col = "organizerType", schema = "Organizer Type")
+  v_remap(out, col = "status", schema = "Volley Tournament Status")
 }
 
 #' Get the ranking of a volleyball tournament

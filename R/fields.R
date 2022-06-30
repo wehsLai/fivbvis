@@ -35,7 +35,7 @@ v_fields <- function(type) {
     ## https://www.fivb.org/VisSDK/Fivb.Vis.DataWPF/Fivb.Vis.DataWPF~Fivb.Vis.Volley.VolleyMatchFilter_members.html
     "Volleyball Match Filter" = c("FirstDate", "FirstDateTimeUTC", "ForLiveScore", "HeadToHeadCodes", "LastDate", "LastDateTimeUTC", "NoEvent", "NoMatches", "NoPool", "NoTeam", "NoTournament", "NoTournaments", "Statuses", "TeamCode", "TournamentGenders", "TournamentOrganizerCode", "TournamentOrganizerType", "TournamentTypes"),
     ## https://www.fivb.org/VisSDK/Fivb.Vis.DataWPF/Fivb.Vis.DataWPF~Fivb.Vis.Volley.VolleyPool_members.html Don't Select: TechnicalInfo
-    "Volleyball Pool" = c("Code", "DeletedDT", "HasRanking", "LastChangeDT", "LastChangeUser", "LastChangeUsername", "Location", "Matches", "Name", "No", "NoConfederation", "NoRound", "NoTournament", "Order", "RankingMethod", "RoundCode", "RoundName", "Teams", "Tournament", "Type", "Version"),
+    "Volleyball Pool" = c("Code", "DeletedDT", "HasRanking", "LastChangeDT", "LastChangeUser", "LastChangeUsername", "Location", "Matches", "Name", "No", "NoConfederation", "NoRound", "NoTournament", "Order", "RankingMethod", "RoundCode", "RoundName", "Teams", "TechnicalInfo", "Tournament", "Type", "Version"),
     ## https://www.fivb.org/VisSDK/Fivb.Vis.DataWPF/Fivb.Vis.DataWPF~Fivb.Vis.Volley.VolleyPoolFilter_members.html
     "Volleyball Pool Filter" = c("ForRanking", "NoTournament", "Numbers"),
     ## https://www.fivb.org/VisSDK/Fivb.Vis.DataWPF/Fivb.Vis.DataWPF~Fivb.Vis.Volley.VolleyPoolRankingEntry_members.html
