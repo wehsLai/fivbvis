@@ -1,6 +1,6 @@
 Package: fivbvis
 Title: Get data from FIVB VIS web server
-Version: 0.1.0
+Version: 0.1.1
 Authors@R: c(person("Ben", "Raymond", email = "ben@untan.gl", role = c("aut", "cre")),
              person("Adrien", "Ickowicz", role = "aut"),
              person("Tyler", "Widdison", role = "aut"),
@@ -31,3 +31,4 @@ RoxygenNote: 7.2.0
 Roxygen: list(markdown = TRUE)
 Remotes: coolbutuseless/minixml
 Config/testthat/edition: 3
+URL: https://wehslai.github.io/fivbvis/, https://github.com/wehsLai/fivbvis
