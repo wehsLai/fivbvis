@@ -3,11 +3,11 @@ base_url <- "https://www.fivb.org/Vis2009/XmlRequest.asmx"
 first_to_upper <- function(z) paste0(toupper(substr(z, 1, 1)), substr(z, 2, nchar(z)))
 
 null_to_na_recurse <- function(obj) {
-    if (is.list(obj)) {
-        obj <- jsonlite:::null_to_na(obj)
-        obj <- lapply(obj, null_to_na_recurse)
-    }
-    return(obj)
+  if (is.list(obj)) {
+    obj <- jsonlite:::null_to_na(obj)
+    obj <- lapply(obj, null_to_na_recurse)
+  }
+  return(obj)
 }
 
 ## internal helper function to build the XML request structure

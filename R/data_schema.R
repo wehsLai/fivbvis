@@ -296,12 +296,12 @@ v_schema <- function(type) {
     ),
     ## https://www.fivb.org/VisSDK/Fivb.Vis.DataWPF/Fivb.Vis.DataWPF~Fivb.Vis.Volley.VolleyTournamentStatus.html
     "Volley Tournament Status" = tribble(
-        ~from, ~to, ~description,
-        1L, "Scheduled", "Is scheduled",
-        2L, "Confirmed", "Is confirmed to be played",
-        3L, "Running", "Is running",
-        4L, "Finished", "Is finished",
-        5L, "Canceled", "Is canceled"
+      ~from, ~to, ~description,
+      1L, "Scheduled", "Is scheduled",
+      2L, "Confirmed", "Is confirmed to be played",
+      3L, "Running", "Is running",
+      4L, "Finished", "Is finished",
+      5L, "Canceled", "Is canceled"
     ),
     ## https://www.fivb.org/VisSDK/VisWebService/VolleyMatchResultType.html
     "Volley Match Result Type" = tribble(
