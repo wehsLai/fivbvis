@@ -17,10 +17,8 @@ Get the ranking of the teams in a volleyball tournament
 }
 \examples{
 \dontrun{
-if (!is.na(s_tournament$defaultPlayersRanking)) {
-  pl <- list(No = s_tournament$defaultPlayersRanking, NumberOfScorers = 20, NumberOfPlayers = 20, Skills = "Block Dig Libero Reception Scorer Service Set Spike")
+  pl <- list(No = 229, NumberOfScorers = 20, NumberOfPlayers = 20, Skills = "Block Dig Libero Reception Scorer Service Set Spike")
   vb_team_ranking <- v_get_volley_team_ranking(parent = pl)
-}
 }
 
 }
