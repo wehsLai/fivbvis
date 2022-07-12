@@ -27,7 +27,7 @@ This is a basic example which shows you how to get data:
 
 By default, results are cached in a per-session cache, so if we make the
 same request again the local results are used, rather than
-re-downloading:
+re-downloading.
 
 ### 1. Tournaments List with Filter
 

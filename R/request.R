@@ -87,10 +87,6 @@ make_request <- function(request, type = "xml", return_type = "parsed", node_pat
     v_options(huge_xml = TRUE)
   }
   out <- do_make_request(request = request, type = type, return_type = return_type, node_path = node_path)
-  if (isTRUE(cache) || cache %in% "refresh") {
-    if (v_verbose()) message("caching to ", cfname)
-    saveRDS(out, file = cfname)
-  }
   if (return_type == "parsed") {
     if (isTRUE(convert_cols)) {
       ## all columns will be character at this point
@@ -98,6 +94,10 @@ make_request <- function(request, type = "xml", return_type = "parsed", node_pat
       try(out <- data.table::fread(text = capture.output(write.csv(out, row.names = FALSE)), data.table = FALSE), silent = TRUE)
     }
     if (isTRUE(as_tibble)) out <- tibble::as_tibble(out)
+  }
+  if (isTRUE(cache) || cache %in% "refresh") {
+    if (v_verbose()) message("caching to ", cfname)
+    saveRDS(out, file = cfname)
   }
   out
 }
