@@ -43,7 +43,14 @@
   <a href="reference/index.html">Reference</a>
 </li>
       </ul>
-<ul class="nav navbar-nav navbar-right"></ul>
+<ul class="nav navbar-nav navbar-right">
+<li>
+  <a href="https://github.com/wehsLai/fivbvis/" class="external-link">
+    <span class="fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
 </div>
 <!--/.nav-collapse -->
   </div>
@@ -60,103 +67,247 @@
 </h1></div>
 <!-- badges: start -->
 
-<p>fivbvis provides an R client to the FIVB VIS web service system.</p>
+<p>fivbvis provides an R client to the <a href="https://www.fivb.org/VisSDK/VisWebService/#Introduction.html" class="external-link">FIVB VIS web service system</a>.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p>You can install fivbvis with:</p>
+<p>You can install the development version of fivbvis like so:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>repos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>openvolley <span class="op">=</span> <span class="st">"https://openvolley.r-universe.dev"</span>,</span>
-<span>                  CRAN <span class="op">=</span> <span class="st">"https://cloud.r-project.org"</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"fivbvis"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co">## or</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"remotes"</span><span class="op">)</span> <span class="co">## if needed</span></span>
-<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"openvolley/fivbvis"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"remotes"</span><span class="op">)</span> <span class="co">## if needed</span></span>
+<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"wehsLai/fivbvis"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a>
+<h2 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
 </h2>
-<p>Fetch list of tournaments:</p>
+<p>This is a basic example which shows you how to get data:</p>
+<p>By default, results are cached in a per-session cache, so if we make the same request again the local results are used, rather than re-downloading.</p>
+<div class="section level3">
+<h3 id="1-tournaments-list-with-filter">1. Tournaments List with Filter<a class="anchor" aria-label="anchor" href="#1-tournaments-list-with-filter"></a>
+</h3>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://wehslai.github.io/fivbvis/" class="external-link">fivbvis</a></span><span class="op">)</span></span>
-<span><span class="va">all_tournaments</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/v_get_volley_tournament_list.html">v_get_volley_tournament_list</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">all_tournaments</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb3"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 1062</span></span></code></pre></div>
-<p>Get details for a specific tournament:</p>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://wehslai.github.io/fivbvis/" class="external-link">fivbvis</a></span><span class="op">)</span> <span class="co"># load package</span></span>
+<span></span>
+<span><span class="va">pl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>Fields <span class="op">=</span> <span class="st">"No ShortNameOrName Season DefaultPlayersRanking"</span><span class="op">)</span></span>
+<span><span class="va">cl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>Filter <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>Seasons <span class="op">=</span> <span class="st">"2021"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">vb_tournaments</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/v_get_volley_tournament_list.html">v_get_volley_tournament_list</a></span><span class="op">(</span>parent <span class="op">=</span> <span class="va">pl</span>, children <span class="op">=</span> <span class="va">cl</span><span class="op">)</span></span>
+<span><span class="va">vb_tournaments</span></span>
+<span><span class="co">#&gt; # A tibble: 46 × 4</span></span>
+<span><span class="co">#&gt;       no shortNameOrName                                 season defaultPlayersR…</span></span>
+<span><span class="co">#&gt;    &lt;int&gt; &lt;chr&gt;                                            &lt;int&gt;            &lt;int&gt;</span></span>
+<span><span class="co">#&gt;  1  1182 Tokyo Olympic Games - Women's Tournament          2021               NA</span></span>
+<span><span class="co">#&gt;  2  1183 Tokyo Olympic Games - Men's Tournament            2021               NA</span></span>
+<span><span class="co">#&gt;  3  1216 FIVB VNL WOMEN                                    2021              187</span></span>
+<span><span class="co">#&gt;  4  1217 FIVB VNL MEN                                      2021              188</span></span>
+<span><span class="co">#&gt;  5  1225 M FISU 2021                                       2021               NA</span></span>
+<span><span class="co">#&gt;  6  1226 W FISU 2021                                       2021               NA</span></span>
+<span><span class="co">#&gt;  7  1227 Volleyball Games - Tokyo Challenge 2021 Women     2021               NA</span></span>
+<span><span class="co">#&gt;  8  1228 Volleyball Games - Tokyo Challenge 2021 Men       2021               NA</span></span>
+<span><span class="co">#&gt;  9  1230 FIVB Volleyball Challenger Cup - Men (Cancelle…   2021               NA</span></span>
+<span><span class="co">#&gt; 10  1231 FIVB Volleyball Challenger Cup - Women (Cancel…   2021               NA</span></span>
+<span><span class="co">#&gt; # … with 36 more rows</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="2-matches-list-with-filter">2. Matches List with Filter<a class="anchor" aria-label="anchor" href="#2-matches-list-with-filter"></a>
+</h3>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">s_tournament</span> <span class="op">&lt;-</span> <span class="va">vb_tournaments</span><span class="op">[</span><span class="va">vb_tournaments</span><span class="op">$</span><span class="va">shortNameOrName</span> <span class="op">==</span> <span class="st">"FIVB VNL MEN"</span>, <span class="op">]</span></span>
+<span><span class="va">pl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>Fields <span class="op">=</span> <span class="st">"DateTimeLocal PoolName, TeamAName TeamBName MatchResultText"</span><span class="op">)</span></span>
+<span><span class="va">cl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>Filter <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>NoTournament <span class="op">=</span> <span class="va">s_tournament</span><span class="op">$</span><span class="va">no</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/v_get_volley_match_list.html">v_get_volley_match_list</a></span><span class="op">(</span>parent <span class="op">=</span> <span class="va">pl</span>, children <span class="op">=</span> <span class="va">cl</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 124 × 4</span></span>
+<span><span class="co">#&gt;    dateTimeLocal       teamAName   teamBName matchResultText</span></span>
+<span><span class="co">#&gt;    &lt;dttm&gt;              &lt;chr&gt;       &lt;chr&gt;     &lt;chr&gt;          </span></span>
+<span><span class="co">#&gt;  1 2021-05-28 10:00:00 France      Bulgaria  3-0            </span></span>
+<span><span class="co">#&gt;  2 2021-05-28 12:00:00 Germany     Australia 3-0            </span></span>
+<span><span class="co">#&gt;  3 2021-05-28 13:00:00 Japan       Iran      3-0            </span></span>
+<span><span class="co">#&gt;  4 2021-05-28 15:00:00 Serbia      Slovenia  3-1            </span></span>
+<span><span class="co">#&gt;  5 2021-05-28 16:00:00 Netherlands Russia    1-3            </span></span>
+<span><span class="co">#&gt;  6 2021-05-28 18:00:00 USA         Canada    3-0            </span></span>
+<span><span class="co">#&gt;  7 2021-05-28 19:30:00 Poland      Italy     3-0            </span></span>
+<span><span class="co">#&gt;  8 2021-05-28 21:00:00 Brazil      Argentina 3-0            </span></span>
+<span><span class="co">#&gt;  9 2021-05-29 10:00:00 Germany     France    2-3            </span></span>
+<span><span class="co">#&gt; 10 2021-05-29 12:00:00 Iran        Russia    1-3            </span></span>
+<span><span class="co">#&gt; # … with 114 more rows</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="3-pools-list-with-filter">3. Pools List with Filter<a class="anchor" aria-label="anchor" href="#3-pools-list-with-filter"></a>
+</h3>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="reference/v_get_volley_tournament.html">v_get_volley_tournament</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
-<span><span class="co">#&gt; # A tibble: 1 × 56</span></span>
-<span><span class="co">#&gt;   Actions BuyTicketsUrl City            Code     ContainsLiveComments</span></span>
-<span><span class="co">#&gt;     &lt;int&gt; &lt;lgl&gt;         &lt;chr&gt;           &lt;chr&gt;                   &lt;int&gt;</span></span>
-<span><span class="co">#&gt; 1    1023 NA            Algiers &amp; Blida BU192005                    0</span></span>
-<span><span class="co">#&gt;   ContainsLiveScores ContainsMatches ContainsMatchResults ContainsNews</span></span>
-<span><span class="co">#&gt;                &lt;int&gt;           &lt;int&gt;                &lt;int&gt;        &lt;int&gt;</span></span>
-<span><span class="co">#&gt; 1                  0               0                    0            0</span></span>
-<span><span class="co">#&gt;   ContainsPictures ContainsPlayByPlay ContainsPlayers ContainsRanking</span></span>
-<span><span class="co">#&gt;              &lt;int&gt;              &lt;int&gt;           &lt;int&gt;           &lt;int&gt;</span></span>
-<span><span class="co">#&gt; 1                0                  0               0               0</span></span>
-<span><span class="co">#&gt;   ContainsStatistics ContainsTeams ContainsVideos ContainsVideoTracking</span></span>
-<span><span class="co">#&gt;                &lt;int&gt;         &lt;int&gt;          &lt;int&gt;                 &lt;int&gt;</span></span>
-<span><span class="co">#&gt; 1                  0             0              0                     0</span></span>
-<span><span class="co">#&gt;   CountryCode CountryName DeadlineO2 DeadlineO2A DeadlineO2bis</span></span>
-<span><span class="co">#&gt;   &lt;chr&gt;       &lt;chr&gt;       &lt;date&gt;     &lt;lgl&gt;       &lt;date&gt;       </span></span>
-<span><span class="co">#&gt; 1 DZ          Algeria     2005-05-20 NA          2005-08-22   </span></span>
-<span><span class="co">#&gt;   DefaultPlayersRanking EndDate    EventLogos Gender IsFreeEntrance IsVisManaged</span></span>
-<span><span class="co">#&gt;   &lt;lgl&gt;                 &lt;date&gt;     &lt;lgl&gt;       &lt;int&gt;          &lt;int&gt;        &lt;int&gt;</span></span>
-<span><span class="co">#&gt; 1 NA                    2005-09-01 NA              0              0            0</span></span>
-<span><span class="co">#&gt;   Logos MaxNbPlayersO2 MaxNbPlayersO2A MaxNbPlayersO2bis</span></span>
-<span><span class="co">#&gt;   &lt;lgl&gt;          &lt;int&gt;           &lt;int&gt;             &lt;int&gt;</span></span>
-<span><span class="co">#&gt; 1 NA                18               0                12</span></span>
-<span><span class="co">#&gt;   MaxNbTeamOfficialsOnBench MaxNbTeams Name                                   </span></span>
-<span><span class="co">#&gt;                       &lt;int&gt;      &lt;int&gt; &lt;chr&gt;                                  </span></span>
-<span><span class="co">#&gt; 1                         5          0 Youth Boys' U19 World Championship 2005</span></span>
-<span><span class="co">#&gt;      No NoArticlePresentation NoConfederation NoEvent NoImageLogo</span></span>
-<span><span class="co">#&gt;   &lt;int&gt; &lt;lgl&gt;                 &lt;lgl&gt;           &lt;lgl&gt;   &lt;lgl&gt;      </span></span>
-<span><span class="co">#&gt; 1     1 NA                    NA              NA      NA         </span></span>
-<span><span class="co">#&gt;   NoImageFivbLogo NoImagePublicity OrganizerCode OrganizerType</span></span>
-<span><span class="co">#&gt;   &lt;lgl&gt;           &lt;lgl&gt;            &lt;lgl&gt;                 &lt;int&gt;</span></span>
-<span><span class="co">#&gt; 1 NA              NA               NA                        1</span></span>
-<span><span class="co">#&gt;   PlayerDisplayMethod PublishOnMsdp Season ShortName</span></span>
-<span><span class="co">#&gt;                 &lt;int&gt;         &lt;int&gt;  &lt;int&gt; &lt;lgl&gt;    </span></span>
-<span><span class="co">#&gt; 1                   1             0   2005 NA       </span></span>
-<span><span class="co">#&gt;   ShortNameOrName                         StartDate  Status TeamType</span></span>
-<span><span class="co">#&gt;   &lt;chr&gt;                                   &lt;date&gt;      &lt;int&gt;    &lt;int&gt;</span></span>
-<span><span class="co">#&gt; 1 Youth Boys' U19 World Championship 2005 2005-08-24      4        1</span></span>
-<span><span class="co">#&gt;   TournamentLogos  Type WebSite Version</span></span>
-<span><span class="co">#&gt;   &lt;lgl&gt;           &lt;int&gt; &lt;lgl&gt;     &lt;int&gt;</span></span>
-<span><span class="co">#&gt; 1 NA                 16 NA            1</span></span></code></pre></div>
-<p>By default, results are cached in a per-session cache, so if we make the same request again the local results are used, rather than re-downloading:</p>
+<code class="sourceCode R"><span><span class="va">pl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>Fields <span class="op">=</span> <span class="st">"Name RoundName"</span><span class="op">)</span></span>
+<span><span class="va">cl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>Filter <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>NoTournament <span class="op">=</span> <span class="va">s_tournament</span><span class="op">$</span><span class="va">no</span>, ForRanking <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/v_get_volley_pool_list.html">v_get_volley_pool_list</a></span><span class="op">(</span>parent<span class="op">=</span><span class="va">pl</span>, children <span class="op">=</span> <span class="va">cl</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 9 × 2</span></span>
+<span><span class="co">#&gt;   name              roundName        </span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;             &lt;chr&gt;            </span></span>
+<span><span class="co">#&gt; 1 Week 1            Preliminary Round</span></span>
+<span><span class="co">#&gt; 2 Week 2            Preliminary Round</span></span>
+<span><span class="co">#&gt; 3 Week 3            Preliminary Round</span></span>
+<span><span class="co">#&gt; 4 Week 4            Preliminary Round</span></span>
+<span><span class="co">#&gt; 5 Week 5            Preliminary Round</span></span>
+<span><span class="co">#&gt; 6 Round robin - Men Preliminary Round</span></span>
+<span><span class="co">#&gt; 7 Semifinals        Final Round      </span></span>
+<span><span class="co">#&gt; 8 Final 3-4         Final Round      </span></span>
+<span><span class="co">#&gt; 9 Final 1-2         Final Round</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="4-teams-list-with-filter">4. Teams List with Filter<a class="anchor" aria-label="anchor" href="#4-teams-list-with-filter"></a>
+</h3>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="reference/v_options.html">v_options</a></span><span class="op">(</span>verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="fu"><a href="reference/v_get_volley_tournament.html">v_get_volley_tournament</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
-<span><span class="co">#&gt; using cached file /tmp/RtmpNUszJv/file41292d15f1be/4a69e890376e4ee5b0f67be41ee86963.rds</span></span>
-<span><span class="co">#&gt;   Actions BuyTicketsUrl            City     Code ContainsLiveComments</span></span>
-<span><span class="co">#&gt; 1    1023               Algiers &amp; Blida BU192005                    0</span></span>
-<span><span class="co">#&gt;   ContainsLiveScores ContainsMatches ContainsMatchResults ContainsNews</span></span>
-<span><span class="co">#&gt; 1                  0               0                    0            0</span></span>
-<span><span class="co">#&gt;   ContainsPictures ContainsPlayByPlay ContainsPlayers ContainsRanking</span></span>
-<span><span class="co">#&gt; 1                0                  0               0               0</span></span>
-<span><span class="co">#&gt;   ContainsStatistics ContainsTeams ContainsVideos ContainsVideoTracking</span></span>
-<span><span class="co">#&gt; 1                  0             0              0                     0</span></span>
-<span><span class="co">#&gt;   CountryCode CountryName DeadlineO2 DeadlineO2A DeadlineO2bis</span></span>
-<span><span class="co">#&gt; 1          DZ     Algeria 2005-05-20                2005-08-22</span></span>
-<span><span class="co">#&gt;   DefaultPlayersRanking    EndDate EventLogos Gender IsFreeEntrance</span></span>
-<span><span class="co">#&gt; 1                       2005-09-01                 0              0</span></span>
-<span><span class="co">#&gt;   IsVisManaged Logos MaxNbPlayersO2 MaxNbPlayersO2A MaxNbPlayersO2bis</span></span>
-<span><span class="co">#&gt; 1            0                   18               0                12</span></span>
-<span><span class="co">#&gt;   MaxNbTeamOfficialsOnBench MaxNbTeams                                    Name</span></span>
-<span><span class="co">#&gt; 1                         5          0 Youth Boys' U19 World Championship 2005</span></span>
-<span><span class="co">#&gt;   No NoArticlePresentation NoConfederation NoEvent NoImageLogo NoImageFivbLogo</span></span>
-<span><span class="co">#&gt; 1  1                                                                          </span></span>
-<span><span class="co">#&gt;   NoImagePublicity OrganizerCode OrganizerType PlayerDisplayMethod</span></span>
-<span><span class="co">#&gt; 1                                            1                   1</span></span>
-<span><span class="co">#&gt;   PublishOnMsdp Season ShortName                         ShortNameOrName</span></span>
-<span><span class="co">#&gt; 1             0   2005           Youth Boys' U19 World Championship 2005</span></span>
-<span><span class="co">#&gt;    StartDate Status TeamType TournamentLogos Type WebSite Version</span></span>
-<span><span class="co">#&gt; 1 2005-08-24      4        1                   16               1</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">pl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>Fields <span class="op">=</span> <span class="st">"Code Name"</span><span class="op">)</span></span>
+<span><span class="va">cl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>Filter <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>NoTournament <span class="op">=</span> <span class="va">s_tournament</span><span class="op">$</span><span class="va">no</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/v_get_volley_team_list.html">v_get_volley_team_list</a></span><span class="op">(</span>parent <span class="op">=</span> <span class="va">pl</span>, children <span class="op">=</span> <span class="va">cl</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 16 × 2</span></span>
+<span><span class="co">#&gt;    code  name       </span></span>
+<span><span class="co">#&gt;    &lt;chr&gt; &lt;chr&gt;      </span></span>
+<span><span class="co">#&gt;  1 ARG   Argentina  </span></span>
+<span><span class="co">#&gt;  2 AUS   Australia  </span></span>
+<span><span class="co">#&gt;  3 BRA   Brazil     </span></span>
+<span><span class="co">#&gt;  4 BUL   Bulgaria   </span></span>
+<span><span class="co">#&gt;  5 CAN   Canada     </span></span>
+<span><span class="co">#&gt;  6 FRA   France     </span></span>
+<span><span class="co">#&gt;  7 GER   Germany    </span></span>
+<span><span class="co">#&gt;  8 IRI   Iran       </span></span>
+<span><span class="co">#&gt;  9 ITA   Italy      </span></span>
+<span><span class="co">#&gt; 10 JPN   Japan      </span></span>
+<span><span class="co">#&gt; 11 NED   Netherlands</span></span>
+<span><span class="co">#&gt; 12 POL   Poland     </span></span>
+<span><span class="co">#&gt; 13 RUS   Russia     </span></span>
+<span><span class="co">#&gt; 14 SLO   Slovenia   </span></span>
+<span><span class="co">#&gt; 15 SRB   Serbia     </span></span>
+<span><span class="co">#&gt; 16 USA   USA</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="5-players-list-with-filter">5. Players List with Filter<a class="anchor" aria-label="anchor" href="#5-players-list-with-filter"></a>
+</h3>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">pl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>Fields <span class="op">=</span> <span class="st">"Team NoShirt FirstNamePlayer LastNamePlayer Position"</span><span class="op">)</span></span>
+<span><span class="va">cl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>Filter <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>NoTournament <span class="op">=</span> <span class="va">s_tournament</span><span class="op">$</span><span class="va">no</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/v_get_volley_player_list.html">v_get_volley_player_list</a></span><span class="op">(</span>parent <span class="op">=</span> <span class="va">pl</span>, children <span class="op">=</span> <span class="va">cl</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 271 × 4</span></span>
+<span><span class="co">#&gt;    noShirt firstNamePlayer lastNamePlayer position</span></span>
+<span><span class="co">#&gt;      &lt;int&gt; &lt;chr&gt;           &lt;chr&gt;          &lt;chr&gt;   </span></span>
+<span><span class="co">#&gt;  1       8 Wallace         De Souza       OP      </span></span>
+<span><span class="co">#&gt;  2       5 Tatsuya         Fukuzawa       OH      </span></span>
+<span><span class="co">#&gt;  3       6 Mitja           Gasparini      OP      </span></span>
+<span><span class="co">#&gt;  4       9 Dejan           Vincic         S       </span></span>
+<span><span class="co">#&gt;  5      17 Tine            Urnaut         OH      </span></span>
+<span><span class="co">#&gt;  6       2 Alen            Pajenk         MB      </span></span>
+<span><span class="co">#&gt;  7      12 Grzegorz        Lomacz         S       </span></span>
+<span><span class="co">#&gt;  8       6 Bartosz         Kurek          OP      </span></span>
+<span><span class="co">#&gt;  9      13 Michal          Kubiak         OH      </span></span>
+<span><span class="co">#&gt; 10       8 Marcus          Böhme          MB      </span></span>
+<span><span class="co">#&gt; # … with 261 more rows</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="6-statistics-list-with-filter-relation">6. Statistics List with Filter, Relation<a class="anchor" aria-label="anchor" href="#6-statistics-list-with-filter-relation"></a>
+</h3>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">pl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>Fields <span class="op">=</span> <span class="st">"BlockPoint BlockFault BlockContinue BlockTotal"</span>,</span>
+<span>           SumBy <span class="op">=</span> <span class="st">"Tournament"</span><span class="op">)</span></span>
+<span><span class="va">cl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>Filter <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>NoTournaments <span class="op">=</span> <span class="va">s_tournament</span><span class="op">$</span><span class="va">no</span>, MatchesToUse<span class="op">=</span><span class="st">"MatchesFinished"</span><span class="op">)</span>,</span>
+<span>           Relation <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>Name<span class="op">=</span><span class="st">"Match"</span>, Fields<span class="op">=</span><span class="st">"NoInTournament DateLocal TeamACode TeamBCode MatchResult"</span><span class="op">)</span>,</span>
+<span>           Relation <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>Name<span class="op">=</span><span class="st">"Team"</span>, Fields<span class="op">=</span><span class="st">"Code Name"</span><span class="op">)</span>,</span>
+<span>           Relation <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>Name<span class="op">=</span><span class="st">"Player"</span>, Fields<span class="op">=</span><span class="st">"TeamName FirstName LastName VolleyPosition"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/v_get_volley_statistic_list.html">v_get_volley_statistic_list</a></span><span class="op">(</span>parent <span class="op">=</span> <span class="va">pl</span>, children <span class="op">=</span> <span class="va">cl</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 279 × 11</span></span>
+<span><span class="co">#&gt;    blockPoint blockFault blockContinue blockTotal match team.code team.name</span></span>
+<span><span class="co">#&gt;         &lt;int&gt;      &lt;int&gt;         &lt;int&gt;      &lt;int&gt; &lt;lgl&gt; &lt;chr&gt;     &lt;chr&gt;    </span></span>
+<span><span class="co">#&gt;  1         23         67            45        135 NA    &lt;NA&gt;      &lt;NA&gt;     </span></span>
+<span><span class="co">#&gt;  2          8         27            22         57 NA    &lt;NA&gt;      &lt;NA&gt;     </span></span>
+<span><span class="co">#&gt;  3          3         14            14         31 NA    &lt;NA&gt;      &lt;NA&gt;     </span></span>
+<span><span class="co">#&gt;  4          9         14            13         36 NA    &lt;NA&gt;      &lt;NA&gt;     </span></span>
+<span><span class="co">#&gt;  5          1          1             0          2 NA    &lt;NA&gt;      &lt;NA&gt;     </span></span>
+<span><span class="co">#&gt;  6         17         19            21         57 NA    &lt;NA&gt;      &lt;NA&gt;     </span></span>
+<span><span class="co">#&gt;  7         10         17            17         44 NA    &lt;NA&gt;      &lt;NA&gt;     </span></span>
+<span><span class="co">#&gt;  8         28         34            46        108 NA    &lt;NA&gt;      &lt;NA&gt;     </span></span>
+<span><span class="co">#&gt;  9         11         29            23         63 NA    &lt;NA&gt;      &lt;NA&gt;     </span></span>
+<span><span class="co">#&gt; 10         15         21            13         49 NA    &lt;NA&gt;      &lt;NA&gt;     </span></span>
+<span><span class="co">#&gt; # … with 269 more rows, and 4 more variables: player.teamName &lt;chr&gt;,</span></span>
+<span><span class="co">#&gt; #   player.firstName &lt;chr&gt;, player.lastName &lt;chr&gt;, player.volleyPosition &lt;chr&gt;</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="7-pool-ranking">7. Pool Ranking<a class="anchor" aria-label="anchor" href="#7-pool-ranking"></a>
+</h3>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">pl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>Fields <span class="op">=</span> <span class="st">"No"</span><span class="op">)</span></span>
+<span><span class="va">cl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>Filter <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>NoTournament <span class="op">=</span> <span class="va">s_tournament</span><span class="op">$</span><span class="va">no</span>, ForRanking<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">vb_pools_frk</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/v_get_volley_pool_list.html">v_get_volley_pool_list</a></span><span class="op">(</span>parent<span class="op">=</span><span class="va">pl</span>, children <span class="op">=</span> <span class="va">cl</span><span class="op">)</span></span>
+<span><span class="kw">if</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">vb_pools_frk</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">pl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>NoPool <span class="op">=</span> <span class="va">vb_pools_frk</span><span class="op">$</span><span class="va">no</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, </span>
+<span>             Fields <span class="op">=</span> <span class="st">"RankTextWithRepeat TeamCode MatchPoints MatchesWon MatchesLost Matches"</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="reference/v_get_volley_pool_ranking.html">v_get_volley_pool_ranking</a></span><span class="op">(</span>parent <span class="op">=</span> <span class="va">pl</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span><span class="co">#&gt; # A tibble: 16 × 6</span></span>
+<span><span class="co">#&gt;    rankTextWithRepeat teamCode matchPoints matchesWon matchesLost matches</span></span>
+<span><span class="co">#&gt;                 &lt;int&gt; &lt;chr&gt;          &lt;int&gt;      &lt;int&gt;       &lt;int&gt;   &lt;int&gt;</span></span>
+<span><span class="co">#&gt;  1                  1 BRA               38         13           2      15</span></span>
+<span><span class="co">#&gt;  2                  2 POL               37         12           3      15</span></span>
+<span><span class="co">#&gt;  3                  3 SLO               34         12           3      15</span></span>
+<span><span class="co">#&gt;  4                  4 FRA               34         11           4      15</span></span>
+<span><span class="co">#&gt;  5                  5 RUS               34         11           4      15</span></span>
+<span><span class="co">#&gt;  6                  6 SRB               28         10           5      15</span></span>
+<span><span class="co">#&gt;  7                  7 USA               24          8           7      15</span></span>
+<span><span class="co">#&gt;  8                  8 CAN               21          7           8      15</span></span>
+<span><span class="co">#&gt;  9                  9 ARG               20          7           8      15</span></span>
+<span><span class="co">#&gt; 10                 10 ITA               19          7           8      15</span></span>
+<span><span class="co">#&gt; 11                 11 JPN               19          7           8      15</span></span>
+<span><span class="co">#&gt; 12                 12 IRI               18          5          10      15</span></span>
+<span><span class="co">#&gt; 13                 13 GER               14          4          11      15</span></span>
+<span><span class="co">#&gt; 14                 14 NED               11          3          12      15</span></span>
+<span><span class="co">#&gt; 15                 15 BUL                7          2          13      15</span></span>
+<span><span class="co">#&gt; 16                 16 AUS                2          1          14      15</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="8-tournament-ranking">8. Tournament Ranking<a class="anchor" aria-label="anchor" href="#8-tournament-ranking"></a>
+</h3>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">pl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>NoTournament <span class="op">=</span> <span class="va">s_tournament</span><span class="op">$</span><span class="va">no</span>, </span>
+<span>           Fields <span class="op">=</span> <span class="st">"RankTextWithRepeat TeamName"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/v_get_volley_tournament_ranking.html">v_get_volley_tournament_ranking</a></span><span class="op">(</span>parent <span class="op">=</span> <span class="va">pl</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 16 × 2</span></span>
+<span><span class="co">#&gt;    rankTextWithRepeat teamName   </span></span>
+<span><span class="co">#&gt;                 &lt;int&gt; &lt;chr&gt;      </span></span>
+<span><span class="co">#&gt;  1                  1 Brazil     </span></span>
+<span><span class="co">#&gt;  2                  2 Poland     </span></span>
+<span><span class="co">#&gt;  3                  3 France     </span></span>
+<span><span class="co">#&gt;  4                  4 Slovenia   </span></span>
+<span><span class="co">#&gt;  5                  5 Russia     </span></span>
+<span><span class="co">#&gt;  6                  6 Serbia     </span></span>
+<span><span class="co">#&gt;  7                  7 USA        </span></span>
+<span><span class="co">#&gt;  8                  8 Canada     </span></span>
+<span><span class="co">#&gt;  9                  9 Argentina  </span></span>
+<span><span class="co">#&gt; 10                 10 Italy      </span></span>
+<span><span class="co">#&gt; 11                 11 Japan      </span></span>
+<span><span class="co">#&gt; 12                 12 Iran       </span></span>
+<span><span class="co">#&gt; 13                 13 Germany    </span></span>
+<span><span class="co">#&gt; 14                 14 Netherlands</span></span>
+<span><span class="co">#&gt; 15                 15 Bulgaria   </span></span>
+<span><span class="co">#&gt; 16                 16 Australia</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="9-player-spike-ranking">9. Player Spike Ranking<a class="anchor" aria-label="anchor" href="#9-player-spike-ranking"></a>
+</h3>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw">if</span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">s_tournament</span><span class="op">$</span><span class="va">defaultPlayersRanking</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">pl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>No <span class="op">=</span> <span class="va">s_tournament</span><span class="op">$</span><span class="va">defaultPlayersRanking</span>, </span>
+<span>             NumberOfScorers <span class="op">=</span> <span class="fl">10</span>, NumberOfPlayers <span class="op">=</span> <span class="fl">10</span>, Skills <span class="op">=</span> <span class="st">"Spike"</span><span class="op">)</span></span>
+<span>  <span class="va">vb_players_ranking</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/v_get_volley_player_ranking.html">v_get_volley_player_ranking</a></span><span class="op">(</span>parent <span class="op">=</span> <span class="va">pl</span><span class="op">)</span></span>
+<span>  <span class="va">vb_players_ranking</span><span class="op">$</span><span class="va">Spike</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"TeamCode"</span>, <span class="st">"FirstName"</span>, <span class="st">"LastName"</span>, <span class="st">"Successes"</span>, <span class="st">"Faults"</span>, <span class="st">"Continues"</span>, <span class="st">"TotalAttempts"</span>, <span class="st">"Note"</span><span class="op">)</span><span class="op">]</span></span>
+<span><span class="op">}</span></span>
+<span><span class="co">#&gt; # A tibble: 10 × 8</span></span>
+<span><span class="co">#&gt;    TeamCode FirstName    LastName Successes Faults Continues TotalAttempts Note </span></span>
+<span><span class="co">#&gt;    &lt;chr&gt;    &lt;chr&gt;        &lt;chr&gt;    &lt;chr&gt;     &lt;chr&gt;  &lt;chr&gt;     &lt;chr&gt;         &lt;chr&gt;</span></span>
+<span><span class="co">#&gt;  1 BRA      Wallace      De Souza 150       39     69        258           58.14</span></span>
+<span><span class="co">#&gt;  2 IRI      Meisam       Salehi   138       44     68        250           55.20</span></span>
+<span><span class="co">#&gt;  3 JPN      Yuki         Ishikawa 149       28     93        270           55.19</span></span>
+<span><span class="co">#&gt;  4 NED      Nimir        Abdel-A… 218       77     113       408           53.43</span></span>
+<span><span class="co">#&gt;  5 BRA      Ricardo Luc… Souza    131       38     79        248           52.82</span></span>
+<span><span class="co">#&gt;  6 SRB      Marko        Ivovic   158       35     111       304           51.97</span></span>
+<span><span class="co">#&gt;  7 RUS      Maxim        Mikhayl… 167       45     111       323           51.70</span></span>
+<span><span class="co">#&gt;  8 SRB      Drazen       Luburic  133       46     81        260           51.15</span></span>
+<span><span class="co">#&gt;  9 BRA      Yoandy       Leal Hi… 139       39     94        272           51.10</span></span>
+<span><span class="co">#&gt; 10 ITA      Alessandro   Michiel… 152       27     125       304           50.00</span></span></code></pre></div>
+</div>
 </div>
 <div class="section level2">
 <h2 id="troubleshooting">Troubleshooting<a class="anchor" aria-label="anchor" href="#troubleshooting"></a>
@@ -167,7 +318,7 @@
 <code>internal error: Huge input lookup</code><a class="anchor" aria-label="anchor" href="#internal-error-huge-input-lookup"></a>
 </h3>
 <p>This indicates that the XML response from the FIVB server is too large or deeply nested and is causing the parser to fail. By default the parser restricts the nesting level that it allows, in order to prevent crashes or other undesirable behaviour. But you can remove this restriction by:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/v_options.html">v_options</a></span><span class="op">(</span>huge_xml <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p>and then try your request again.</p>
 </div>
@@ -176,7 +327,14 @@
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
-    <div class="license">
+    <div class="links">
+<h2 data-toc-skip>Links</h2>
+<ul class="list-unstyled">
+<li><a href="https://github.com/wehsLai/fivbvis/" class="external-link">Browse source code</a></li>
+</ul>
+</div>
+
+<div class="license">
 <h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
 <li><a href="LICENSE.html">Full license</a></li>
