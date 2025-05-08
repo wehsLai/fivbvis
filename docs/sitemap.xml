@@ -4,16 +4,16 @@
     <loc>/404.html</loc>
   </url>
   <url>
-    <loc>/authors.html</loc>
-  </url>
-  <url>
-    <loc>/index.html</loc>
-  </url>
-  <url>
     <loc>/LICENSE-text.html</loc>
   </url>
   <url>
     <loc>/LICENSE.html</loc>
+  </url>
+  <url>
+    <loc>/authors.html</loc>
+  </url>
+  <url>
+    <loc>/index.html</loc>
   </url>
   <url>
     <loc>/reference/fivbvis.html</loc>
@@ -95,30 +95,6 @@
   </url>
   <url>
     <loc>/reference/v_get_volley_player_list.html</loc>
-  </url>
-  <url>
-    <loc>/reference/v_get_volley_player_ranking.html</loc>
-  </url>
-  <url>
-    <loc>/reference/v_get_volley_pool.html</loc>
-  </url>
-  <url>
-    <loc>/reference/v_get_volley_pool_list.html</loc>
-  </url>
-  <url>
-    <loc>/reference/v_get_volley_pool_ranking.html</loc>
-  </url>
-  <url>
-    <loc>/reference/v_get_volley_statistic_list.html</loc>
-  </url>
-  <url>
-    <loc>/reference/v_get_volley_team.html</loc>
-  </url>
-  <url>
-    <loc>/reference/v_get_volley_team_list.html</loc>
-  </url>
-  <url>
-    <loc>/reference/v_get_volley_team_ranking.html</loc>
   </url>
   <url>
     <loc>/reference/v_get_volley_tournament.html</loc>

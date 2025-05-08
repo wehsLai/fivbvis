@@ -1,22 +1,21 @@
 Package: fivbvis
-Title: Client for the FIVB VIS Web Service
-Version: 0.0.6
+Title: Client for the FIVB VIS Web Service \url{https://www.fivb.org/VisSDK/VisWebService/}
+Version: 0.0.7
 Authors@R: c(person("Ben", "Raymond", email = "ben@untan.gl", role = c("aut", "cre")),
              person("Adrien", "Ickowicz", role = "aut"),
              person("Tyler", "Widdison", role = "aut"),
-             person("Wen Hsiu", "Lai", role = "aut"),
              person("openvolley.org", role = "org"))
 Description: Client for the FIVB VIS web service.
+URL: https://fivbvis.openvolley.org, https://github.com/openvolley/fivbvis
+BugReports: https://github.com/openvolley/fivbvis/issues
 Imports:
     assertthat,
     data.table,
     digest,
-    dplyr,
     httr,
     jsonlite,
     methods,
     minixml,
-    purrr,
     rappdirs,
     rvest,
     tibble,
@@ -27,7 +26,6 @@ Suggests:
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.1.1
+RoxygenNote: 7.3.2
 Roxygen: list(markdown = TRUE)
 Remotes: coolbutuseless/minixml
-URL: https://wehslai.github.io/fivbvis/, https://github.com/wehsLai/fivbvis
